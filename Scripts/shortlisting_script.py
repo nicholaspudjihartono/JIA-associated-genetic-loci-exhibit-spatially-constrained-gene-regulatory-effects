@@ -6,7 +6,7 @@ import statsmodels
 from statsmodels.stats.multitest import fdrcorrection
 pandas.options.mode.chained_assignment = None
 
-#Below is a dictionary containing 71 JIA risk loci as the keys, and its LD partners as the values (see Supplementary Table 3 in the manuscript)
+#"risk_loci_dict" is a dictionary containing 71 JIA risk loci as the keys, and its LD partners as the values (see Supplementary Table 3 in the manuscript)
 
 risk_loci_dict = {'rs6679677': ['rs6679677'],
  'rs72698115': ['rs73026617', 'rs111810442', 'rs72698115'],
