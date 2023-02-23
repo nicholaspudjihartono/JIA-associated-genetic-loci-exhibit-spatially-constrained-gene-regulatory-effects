@@ -662,7 +662,26 @@ eqtls = pandas.read_csv(args.eqtls, sep = '\t')
 genes = pandas.read_csv(args.genes, sep = '\t')
 snps = pandas.read_csv(args.snps, sep = '\t')
 
+
+#At the current state, the "eqtls.txt" file does not contain rsID information for each SNPs, it only contain the variant ID. 
+#In order to get the rsID information, we merge "eqtls.txt" with the ['snp','variant_id'] columns of "snps.txt". the ['snp'] column contains the rsID information. 
+
+eqtls =  eqtls.merge(snps[['snp','variant_id']].drop_duplicates(),how='left',left_on='sid',right_on='variant_id')
+
+#At the current state, the "eqtls.txt" file does not contain gene name information for each target gene, it only contain the the gene GENCODE ID. 
+#In order to get the gene name information, we merge "eqtls.txt" with the ['gene','gencode_id'] columns of "genes.txt". the ['gene'] column contains the gene name information. 
+
+eqtls = eqtls.merge(genes[['gene','gencode_id']].drop_duplicates(),how='left', left_on='pid', right_on='gencode_id')
+
+#Remove redundant columns from 'eqtls' dataframe
+eqtls = eqtls.drop(columns=['sid','pid'])
+
+#Re-order the columns for easier reading
+
+eqtls = eqtls.reindex(columns=['variant_id','snp','sid_chr','sid_pos','gencode_id','gene','adj_pval','pval','b','b_se','maf','tissue'])
+
 print(eqtls.head())
+
 
 
 
