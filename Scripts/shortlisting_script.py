@@ -694,6 +694,13 @@ eqtls['risk_locus'] = eqtls['snp'].map(categorize_by_risk_locus)
 
 eqtls_minimumP = eqtls.loc[eqtls.groupby(['tissue','risk_locus','gene'])['pval'].idxmin()]
 
+#Save this "eqtls_minimumP" as a csv file called "eqtls_shortlisted.txt". But we want to follow the format of the CoDeS3D output file "eqtls.txt"
+
+eqtls_shortlisted = eqtls_minimumP[['variant_id','gencode_id','sid_chr','sid_pos','adj_pval','pval','b','b_se','maf','tissue']]
+eqtls_shortlisted.rename(columns = {'variant_id':'sid','gencode_id':'pid'}, inplace = True)
+eqtls_shortlisted.to_csv('eqtls_shortlisted.txt',sep='\t', index=False)
+
+
 #Now that we have the representative p-value of each hypothesis clusters (i.e., risk locus-gene-tissue combinations)
 #We want to do Benjamini-Hochberg FDR correction on the set of representative hypotheses individually in each tissues
 #First, we make an empty column called "adj_pval_shortlisted"
