@@ -19,6 +19,12 @@ note :  use "python shortlisting_script.py -h" to access help page
 
 
 
+
+
+
+
+
+
 B). However, in the output file "significant_eqtls_shortlisted.txt" , the effect size of each spatial eQTL-target gene interactions is reported with beta value, not allelic fold change (log2[aFc]). In order to get the effect size in term of allelic fold change, we need to use the second python script "summary.py".
 
 the script "summary.py" takes the second output file of the script "shortlisting_script.py" called "eqtls_shortlisted.txt" as the input. Note that in order for "summary.py" to work properly, it must be in the same folder with the CoDeS3D output files "genes.txt" and "snps.txt". The script "summary.py" will output "significant_eqtls.txt" which is a tab-separated file containing spatial eQTL-target gene interactions after shortlisting that passed the FDR correction (effect size is reported using (log2 [aFc]))
