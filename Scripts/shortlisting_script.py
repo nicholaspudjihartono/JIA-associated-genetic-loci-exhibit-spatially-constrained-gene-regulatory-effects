@@ -638,6 +638,7 @@ risk_loci_dict = {'rs6679677': ['rs6679677'],
   'rs2247650',
   'rs10707238']}
 
+
 # The function below is to categorize each SNP by the risk locus it belongs to
 # For example, "categorize_by_risk_locus('rs2549782')" will output "rs4869313/rs4869314" as the risk locus
 
@@ -645,8 +646,8 @@ def categorize_by_risk_locus(SNP):
     for risk_locus,LD_partners in risk_loci_dict.items():
         if SNP in LD_partners:
             return risk_locus
-
-
+     
+     
      
 #Create the argument parser that takes in the CoDeS3D output files 'eqtls.txt' , 'snps.txt', and 'genes.txt'
 
@@ -676,11 +677,46 @@ eqtls = eqtls.merge(genes[['gene','gencode_id']].drop_duplicates(),how='left', l
 #Remove redundant columns from 'eqtls' dataframe
 eqtls = eqtls.drop(columns=['sid','pid'])
 
+
+#Currently, the "eqtls" dataframe already has the SNP rsIDs and target gene name information
+#However, the SNPs have not yet been grouped according to the risk locus it belongs to
+
+     
+#Now we create a new column called "risk_locus" which will contain the risk locus information of each SNP in the dataframe !
+
+eqtls['risk_locus'] = ''
+eqtls['risk_locus'] = eqtls['snp'].map(categorize_by_risk_locus)
+
+
+
+#Now, we need to select the spatial eQTL with the lowest p-value for each risk locus-gene-tissue combinations as a representative of the risk locus' regulatory effect on a particular gene in a specific tissue/immune cell type prior to FDR correction.
+#The rationale behind this approach is explained in Supplementary Figure 3 in the manuscript
+
+eqtls_minimumP = eqtls.loc[eqtls.groupby(['tissue','lead_SNP','gene'])['pval'].idxmin()]
+
+#Now that we have the representative p-value of each hypothesis clusters (i.e., risk locus-gene-tissue combinations)
+#We want to do Benjamini-Hochberg FDR correction on the set of representative hypotheses individually in each tissues
+#First, we make an empty column called "adj_pval_shortlisted"
+eqtls_minimumP['adj_pval_shortlisted'] = ''
+
+#Lets now fill the ['adj_pval_shortlisted'] column with the appropriate value
+
+for x in list(eqtls_minimumP['tissue'].unique()):
+    subset = eqtls_minimumP[eqtls_minimumP['tissue'] == x]
+    fdr = fdrcorrection(subset['pval'])
+    subset['adj_pval_shortlisted']=fdr[1]
+    eqtls_minimumP.update(subset)
+
+#Finally.. extract the shortlisted significant eqtls (i.e., rows that have 'adj_pval_shortlisted' less than or equal to 0.05)
+significant_eqtls_shortlisted = eqtls_minimumP[eqtls_minimumP['adj_pval_shortlisted'] <= 0.05]
+
+
 #Re-order the columns for easier reading
 
-eqtls = eqtls.reindex(columns=['variant_id','snp','sid_chr','sid_pos','gencode_id','gene','adj_pval','pval','b','b_se','maf','tissue'])
+significant_eqtls_shortlisted = significant_eqtls_shortlisted.reindex(columns=['risk_locus','variant_id','snp','sid_chr','sid_pos','gencode_id','gene','adj_pval_shortlisted','adj_pval','pval','b','b_se','maf','tissue'])
 
-print(eqtls.head())
+#Save as a csv file
+significant_eqtls_shortlisted.to_csv('significant_eqtls_shortlisted.txt', sep='\t', index=False)
 
 
 
