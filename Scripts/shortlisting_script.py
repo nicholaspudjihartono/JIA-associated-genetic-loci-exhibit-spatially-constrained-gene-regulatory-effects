@@ -688,11 +688,17 @@ eqtls['risk_locus'] = ''
 eqtls['risk_locus'] = eqtls['snp'].map(categorize_by_risk_locus)
 
 
+#CHECKPOINT_1
+print('checkpoint 1 reached')
+
 
 #Now, we need to select the spatial eQTL with the lowest p-value for each risk locus-gene-tissue combinations as a representative of the risk locus' regulatory effect on a particular gene in a specific tissue/immune cell type prior to FDR correction.
 #The rationale behind this approach is explained in Supplementary Figure 3 in the manuscript
 
 eqtls_minimumP = eqtls.loc[eqtls.groupby(['tissue','risk_locus','gene'])['pval'].idxmin()]
+
+#CHECKPOINT_2
+print('checkpoint 2 reached')
 
 #Now that we have the representative p-value of each hypothesis clusters (i.e., risk locus-gene-tissue combinations)
 #We want to do Benjamini-Hochberg FDR correction on the set of representative hypotheses individually in each tissues
@@ -706,19 +712,28 @@ for x in list(eqtls_minimumP['tissue'].unique()):
     fdr = fdrcorrection(subset['pval'])
     subset['adj_pval_shortlisted']=fdr[1]
     eqtls_minimumP.update(subset)
+    
+#CHECKPOINT_3
+print('checkpoint 3 reached')
 
 #Finally.. extract the shortlisted significant eqtls (i.e., rows that have 'adj_pval_shortlisted' less than or equal to 0.05)
 significant_eqtls_shortlisted = eqtls_minimumP[eqtls_minimumP['adj_pval_shortlisted'] <= 0.05]
 
+#CHECKPOINT_4
+print('checkpoint 4 reached')
 
 #Re-order the columns for easier reading
 
 significant_eqtls_shortlisted = significant_eqtls_shortlisted.reindex(columns=['risk_locus','variant_id','snp','sid_chr','sid_pos','gencode_id','gene','adj_pval_shortlisted','adj_pval','pval','b','b_se','maf','tissue'])
 
+#CHECKPOINT_5
+print('checkpoint 5 reached')
+
 #Save as a csv file
 significant_eqtls_shortlisted.to_csv('significant_eqtls_shortlisted.txt', sep='\t', index=False)
 
-
+#CHECKPOINT_6
+print('checkpoint 6 reached ... aka FINISHED')
 
 
 
