@@ -638,6 +638,32 @@ risk_loci_dict = {'rs6679677': ['rs6679677'],
   'rs2247650',
   'rs10707238']}
 
-print(risk_loci_dict)
+# The function below is to categorize each SNP by the risk locus it belongs to
+# For example, "categorize_by_risk_locus('rs2549782')" will output "rs4869313/rs4869314" as the risk locus
+
+def categorize_by_risk_locus(SNP):
+    for risk_locus,LD_partners in risk_loci_dict.items():
+        if SNP in LD_partners:
+            return risk_locus
+
+
+     
+#Create the argument parser that takes in the CoDeS3D output files 'eqtls.txt' , 'snps.txt', and 'genes.txt'
+
+parser = argparse.ArgumentParser(description='')
+parser.add_argument("-e","--eqtls", type=argparse.FileType('r'), required=True, metavar = "eqtls.txt", help = "A tab-separated file containing eQTL-target gene pairs and its corresponding P-values, this is the CoDeS3D 'eqtls.txt' output file", dest = "eqtls")
+parser.add_argument("-g", "--genes", type=argparse.FileType('r'), required=True, metaver="genes.txt", help = "A tab-separated file showing all the genes that are physically interacting with the input SNPs, this is the CoDeS3D 'genes.txt' output file", dest = "genes")
+parser.add_argument("-s", "--snps", type=argparse.FileType('r'), required=True, metaver="snps.txt", help = "A tab-separated file showing all the SNPs are in the eQTL databases, this is the CoDeS3D 'snps.txt' output file", dest = "snps")
+args = parser.parse_args()
+
+# Read the input TSV files into a pandas DataFrame
+
+eqtls = pandas.read_csv(args.eqtls, sep = '\t')
+genes = pandas.read_csv(args.genes, sep = '\t')
+snps = pandas.read_csv(args.snps, sep = '\t')
+
+print(eqtls.head())
+
+
 
 
