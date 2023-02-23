@@ -692,7 +692,7 @@ eqtls['risk_locus'] = eqtls['snp'].map(categorize_by_risk_locus)
 #Now, we need to select the spatial eQTL with the lowest p-value for each risk locus-gene-tissue combinations as a representative of the risk locus' regulatory effect on a particular gene in a specific tissue/immune cell type prior to FDR correction.
 #The rationale behind this approach is explained in Supplementary Figure 3 in the manuscript
 
-eqtls_minimumP = eqtls.loc[eqtls.groupby(['tissue','lead_SNP','gene'])['pval'].idxmin()]
+eqtls_minimumP = eqtls.loc[eqtls.groupby(['tissue','risk_locus','gene'])['pval'].idxmin()]
 
 #Now that we have the representative p-value of each hypothesis clusters (i.e., risk locus-gene-tissue combinations)
 #We want to do Benjamini-Hochberg FDR correction on the set of representative hypotheses individually in each tissues
