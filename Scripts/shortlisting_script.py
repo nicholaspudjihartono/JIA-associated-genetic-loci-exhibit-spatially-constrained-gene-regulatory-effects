@@ -652,8 +652,8 @@ def categorize_by_risk_locus(SNP):
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument("-e","--eqtls", type=argparse.FileType('r'), required=True, metavar = "eqtls.txt", help = "A tab-separated file containing eQTL-target gene pairs and its corresponding P-values, this is the CoDeS3D 'eqtls.txt' output file", dest = "eqtls")
-parser.add_argument("-g", "--genes", type=argparse.FileType('r'), required=True, metaver="genes.txt", help = "A tab-separated file showing all the genes that are physically interacting with the input SNPs, this is the CoDeS3D 'genes.txt' output file", dest = "genes")
-parser.add_argument("-s", "--snps", type=argparse.FileType('r'), required=True, metaver="snps.txt", help = "A tab-separated file showing all the SNPs are in the eQTL databases, this is the CoDeS3D 'snps.txt' output file", dest = "snps")
+parser.add_argument("-g", "--genes", type=argparse.FileType('r'), required=True, metavar="genes.txt", help = "A tab-separated file showing all the genes that are physically interacting with the input SNPs, this is the CoDeS3D 'genes.txt' output file", dest = "genes")
+parser.add_argument("-s", "--snps", type=argparse.FileType('r'), required=True, metavar="snps.txt", help = "A tab-separated file showing all the SNPs are in the eQTL databases, this is the CoDeS3D 'snps.txt' output file", dest = "snps")
 args = parser.parse_args()
 
 # Read the input TSV files into a pandas DataFrame
