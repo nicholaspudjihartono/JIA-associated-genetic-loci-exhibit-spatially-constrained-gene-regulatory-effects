@@ -11,6 +11,8 @@ A). The first Python script "shortlisting_script.py" takes in three CoDeS3D outp
 2. The second output file "eqtls_shortlisted.txt" is a tab-separated file containing spatial eQTL-target gene interactions after shortlisting that have not been filtered for FDR less than 0.05 
 
 example usage command : "python shortlisting_script.py -e eqtls.txt -g genes.txt -s snps.txt"
+
+
 note :  use "python shortlisting_script.py -h" to access help page
 
 
@@ -22,4 +24,6 @@ B). However, in the output file "significant_eqtls_shortlisted.txt" , the effect
 the script "summary.py" takes the second output file of the script "shortlisting_script.py" called "eqtls_shortlisted.txt" as the input. Note that in order for "summary.py" to work properly, it must be in the same folder with the CoDeS3D output files "genes.txt" and "snps.txt". The script "summary.py" will output "significant_eqtls.txt" which is a tab-separated file containing spatial eQTL-target gene interactions after shortlisting that passed the FDR correction (effect size is reported using (log2 [aFc]))
 
 example usage command : "python summary.py -e eqtls_shortlisted.txt --eqtl-project GTEx --multi-test tissue -o summary_py_results"
+
+
 note : the "--multi-test tissue" argument is to make sure that the FDR correction is done separately in each tissues. use "python summary.py -h" to access help page.
