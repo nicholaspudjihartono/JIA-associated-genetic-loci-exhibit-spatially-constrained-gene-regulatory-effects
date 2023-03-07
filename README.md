@@ -1,4 +1,4 @@
-This repository contains the python scripts used for generating the shortlisted CoDeS3D results for the manuscript "Juvenile idiopathic arthritis-associated genetic loci exhibit spatially constrained gene regulatory effects across multiple human tissues and immune cell types". This study combined multiple levels of biological information (3D genome organization [Hi-C] and tissue/cell type-specific eQTL data) to decipher the biological mechanism linking genetic risk to the development of JIA.
+This repository contains the python scripts used for generating the shortlisted CoDeS3D results for the manuscript "Juvenile idiopathic arthritis-associated genetic loci exhibit spatially constrained gene regulatory effects across multiple tissues and immune cell types". This study combined multiple levels of biological information (3D genome organization [Hi-C] and tissue/cell type-specific eQTL data) to decipher the biological mechanism linking genetic risk to the development of JIA.
 
 The statistical rationale behind this "shortlisting" step is explained in Supplementary Figure 3 in the manuscript
 
