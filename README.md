@@ -4,13 +4,13 @@ The statistical rationale behind this "shortlisting" step is explained in Supple
 
 In this repository, the "Scripts" folder contains two Python scripts.
 
-1. The first Python script "shortlisting_script.py" takes in three CoDeS3D output files (eqtls.txt, genes.txt, snps.txt) as the input, this script outputs two files :
+1. The first Python script "shortlisting_script.py" takes in three CoDeS3D output files (eqtls.txt, genes.txt, snps.txt), and one csv file of risk locus/LD grouping as the input (see "risk_locus_grouping.csv" file or supplementary table 3 for examples), this script outputs two files :
 
 A). The first output file "significant_eqtls_shortlisted.txt" is a tab-separated file containing spatial eQTL-target gene interactions after shortlisting that passed the FDR correction
 
 B). The second output file "eqtls_shortlisted.txt" is a tab-separated file containing spatial eQTL-target gene interactions after shortlisting that have not been filtered for FDR less than 0.05 
 
-example usage command : "python shortlisting_script.py -e eqtls.txt -g genes.txt -s snps.txt"
+example usage command : "python shortlisting_script.py -e eqtls.txt -g genes.txt -s snps.txt -l risk_locus_grouping.csv"
 
 
 note :  use "python shortlisting_script.py -h" to access help page
