@@ -2,6 +2,8 @@ This repository contains the python scripts used for generating the shortlisted 
 
 The statistical rationale behind this "shortlisting" step is explained in Supplementary Figure 3 in the manuscript
 
+![Alt text](./shortlisting_illustration.png)
+
 In this repository, the "Scripts" folder contains two Python scripts.
 
 1. The first Python script "shortlisting_script.py" takes in three CoDeS3D output files (eqtls.txt, genes.txt, snps.txt), and one csv file of risk locus/LD grouping as the input (see "risk_locus_grouping.csv" file or supplementary table 3 for examples), this script outputs two files :
@@ -14,9 +16,6 @@ example usage command : "python shortlisting_script.py -e eqtls.txt -g genes.txt
 
 
 note :  use "python shortlisting_script.py -h" to access help page
-
-
-
 
 
 
